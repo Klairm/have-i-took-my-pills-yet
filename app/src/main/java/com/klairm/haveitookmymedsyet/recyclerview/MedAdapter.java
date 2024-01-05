@@ -20,14 +20,16 @@ import com.klairm.haveitookmymedsyet.database.Med;
 import com.klairm.haveitookmymedsyet.database.MedDAO;
 import com.klairm.haveitookmymedsyet.database.MedDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
     LifecycleOwner lifecycleOwner;
     EditText filterEt;
 
-    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner,EditText filterEt) {
+    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner, EditText filterEt) {
         super(diffCallback);
         this.lifecycleOwner = lifecycleOwner;
         this.filterEt = filterEt;
@@ -61,22 +63,8 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
     }
 
     public String formatDateText(Date date) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-
-        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int year = cal.get(Calendar.YEAR);
-        int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
-
-
-        String formattedDate = String.format("%d/%d/%d\t\t\t%d:%d", dayOfMonth, month, year, hourOfDay, minute);
-
-        return formattedDate;
-
-
+        SimpleDateFormat formatedDate = new SimpleDateFormat("d/M/y H:m", Locale.ENGLISH);
+        return formatedDate.format(date);
     }
 
     public static class UserDiff extends DiffUtil.ItemCallback<Med> {

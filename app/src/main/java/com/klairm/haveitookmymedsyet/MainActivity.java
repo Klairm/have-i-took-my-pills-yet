@@ -9,13 +9,8 @@ import androidx.room.Room;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.klairm.haveitookmymedsyet.database.Med;
@@ -23,15 +18,11 @@ import com.klairm.haveitookmymedsyet.database.MedDAO;
 import com.klairm.haveitookmymedsyet.database.MedDatabase;
 import com.klairm.haveitookmymedsyet.recyclerview.MedAdapter;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
-import com.klairm.haveitookmymedsyet.recyclerview.MedAdapter;
 
 public class MainActivity extends AppCompatActivity {
     // TODO: Don't use .allowMainThreadQueries() , instead async for the database
-    // TODO: Allow filter by name, using fragments maybe?
     // TODO: Better UI lmao
 
     @Override
@@ -54,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         MedViewModel viewModel = new MedViewModel(medDao);
 
 
-        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this,filterEt);
+        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this, filterEt);
 
         viewModel.medList.observe(this, list -> adapter.submitList(list));
 
@@ -81,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         submitBtn.setOnClickListener(v -> {

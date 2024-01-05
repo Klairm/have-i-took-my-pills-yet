@@ -1,10 +1,9 @@
 package com.klairm.haveitookmymedsyet.recyclerview;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.klairm.haveitookmymedsyet.MainActivity;
 import com.klairm.haveitookmymedsyet.MedViewModel;
 import com.klairm.haveitookmymedsyet.R;
 import com.klairm.haveitookmymedsyet.database.Med;
@@ -24,14 +22,15 @@ import com.klairm.haveitookmymedsyet.database.MedDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
     LifecycleOwner lifecycleOwner;
+    EditText filterEt;
 
-    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner) {
+    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner,EditText filterEt) {
         super(diffCallback);
         this.lifecycleOwner = lifecycleOwner;
+        this.filterEt = filterEt;
     }
 
 
@@ -49,12 +48,13 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
         holder.getMedicationName().setText(getItem(position).medName);
         holder.getDateTaken().setText(formatDateText(getItem(position).medDate));
         holder.getTimesTaken().setText(String.valueOf(getItem(position).timesTaken));
-        holder.getDeleteButtoN().setOnClickListener(v -> {
+        holder.getDeleteButton().setOnClickListener(v -> {
             MedDatabase db = Room.databaseBuilder(holder.deleteBtn.getContext(), MedDatabase.class, "med").allowMainThreadQueries().build();
             MedDAO medDao = db.medDao();
             MedViewModel viewModel = new MedViewModel(medDao);
             viewModel.medList.observe(this.lifecycleOwner, list -> this.submitList(list));
             medDao.deleteMed(getItem(position));
+            viewModel.setMedList(filterEt.getText().toString());
 
         });
 
@@ -122,7 +122,7 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
             return dateTaken;
         }
 
-        public ImageButton getDeleteButtoN() {
+        public ImageButton getDeleteButton() {
             return deleteBtn;
         }
     }

@@ -1,5 +1,6 @@
 package com.klairm.haveitookmymedsyet.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -17,7 +18,9 @@ public class Med {
     @ColumnInfo( name = "times_taken")
     public int timesTaken;
 
+
     @ColumnInfo(name = "med_date")
+
     public Date medDate;
 
     public int getId() {

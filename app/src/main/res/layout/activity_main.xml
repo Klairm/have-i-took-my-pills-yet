@@ -12,11 +12,14 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="74dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="15dp"
+        android:layout_width="80dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="25dp"
         android:backgroundTint="#070000"
+        android:drawableTint="#FDFDFD"
         android:text="@string/add_button"
+        android:textColor="#FAFAFA"
+        android:textColorHighlight="#FFFCFC"
         app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
@@ -25,14 +28,13 @@
         android:id="@+id/editTextNumber"
         android:layout_width="54dp"
         android:layout_height="47dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="96dp"
-        android:layout_marginEnd="74dp"
+        android:layout_marginEnd="60dp"
         android:ems="10"
         android:inputType="number"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/editTextText"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -42,42 +44,80 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="text"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextNumber"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.8"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/med_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColorHighlight="#040000"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.888" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="100dp"
         android:layout_height="22dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/timesTak_title"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        android:textColorHighlight="#070707"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+        app:layout_constraintStart_toStartOf="@+id/editTextNumber"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicationList"
         android:layout_width="347dp"
         android:layout_height="412dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+    <EditText
+        android:id="@+id/fentanilo"
+        android:layout_width="104dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/medicationList"
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toEndOf="@+id/filterName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/filterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Name filter:"
+        app:layout_constraintBottom_toBottomOf="@+id/fentanilo"
+        app:layout_constraintStart_toStartOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="@+id/fentanilo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

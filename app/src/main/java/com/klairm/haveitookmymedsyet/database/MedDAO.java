@@ -13,7 +13,7 @@ public interface MedDAO {
     @Query("SELECT * FROM Med ORDER BY med_date DESC")
     LiveData<List<Med>> getAll();
 
-    @Query("SELECT * FROM Med WHERE med_name = :name")
+    @Query("SELECT * FROM Med WHERE med_name LIKE '%' || :name || '%' ORDER BY med_date DESC" )
     LiveData<List<Med>> getAllByName(String name);
 
 

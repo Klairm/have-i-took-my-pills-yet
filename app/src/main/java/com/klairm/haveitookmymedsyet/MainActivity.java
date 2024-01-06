@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Button submitBtn = findViewById(R.id.button);
         EditText medNameEt = findViewById(R.id.editTextText);
         EditText timesTakenEt = findViewById(R.id.editTextNumber);
-        EditText filterEt = findViewById(R.id.fentanilo);
+        EditText filterEt = findViewById(R.id.filterSearch);
         RecyclerView medicationList = findViewById(R.id.medicationList);
 
         Med medication = new Med();

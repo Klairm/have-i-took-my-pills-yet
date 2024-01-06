@@ -15,7 +15,7 @@ public class Med {
     @ColumnInfo(name = "med_name")
     public String medName;
 
-    @ColumnInfo( name = "times_taken")
+    @ColumnInfo(name = "times_taken")
     public int timesTaken;
 
 

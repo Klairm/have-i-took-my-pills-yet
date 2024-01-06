@@ -15,23 +15,22 @@ public class MedViewModel extends ViewModel {
 
     private final MutableLiveData<String> mutacion = new MutableLiveData<>();
 
-    public  LiveData<List<Med>> medList = Transformations.switchMap(mutacion, s -> {
-        if(s.length() == 0){
+    public LiveData<List<Med>> medList = Transformations.switchMap(mutacion, s -> {
+        if (s.length() == 0) {
             return medDao.getAll();
-        }else{
+        } else {
             return medDao.getAllByName(s);
         }
 
     });
-    public MedViewModel(MedDAO medDao){
+
+    public MedViewModel(MedDAO medDao) {
 
         this.medDao = medDao;
     }
 
-    public void setMedList(String medName){
-      mutacion.setValue(medName);
-
-
+    public void setMedList(String medName) {
+        mutacion.setValue(medName);
 
 
     }

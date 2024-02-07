@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.klairm.haveitookmymedsyet.database.Med;
 import com.klairm.haveitookmymedsyet.database.MedDAO;
 import com.klairm.haveitookmymedsyet.database.MedDatabase;
+import com.klairm.haveitookmymedsyet.databinding.ActivityMainBinding;
 import com.klairm.haveitookmymedsyet.recyclerview.MedAdapter;
 
 import java.util.Date;
@@ -25,15 +26,13 @@ public class MainActivity extends AppCompatActivity {
     // TODO: Don't use .allowMainThreadQueries() , instead async for the database
     // TODO: Better UI lmao
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button submitBtn = findViewById(R.id.button);
-        EditText medNameEt = findViewById(R.id.editTextText);
-        EditText timesTakenEt = findViewById(R.id.editTextNumber);
-        EditText filterEt = findViewById(R.id.filterSearch);
-        RecyclerView medicationList = findViewById(R.id.medicationList);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Med medication = new Med();
 
@@ -45,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
         MedViewModel viewModel = new MedViewModel(medDao);
 
 
-        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this, filterEt);
+        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this, binding.filterSearch);
 
-        viewModel.medList.observe(this, list -> adapter.submitList(list));
+        viewModel.medList.observe(this, adapter::submitList);
 
 
-        medicationList.setAdapter(adapter);
-        medicationList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        viewModel.setMedList(filterEt.getText().toString());
+        binding.medicationList.setAdapter(adapter);
+        binding.medicationList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        viewModel.setMedList(binding.filterSearch.getText().toString());
 
-        filterEt.addTextChangedListener(new TextWatcher() {
+        binding.filterSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.setMedList(filterEt.getText().toString());
+                viewModel.setMedList(binding.filterSearch.getText().toString());
 
 
             }
@@ -74,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        submitBtn.setOnClickListener(v -> {
-            if (medNameEt.getText().toString().length() == 0) {
+        binding.btnAdd.setOnClickListener(v -> {
+            if (binding.etMedication.getText().toString().length() == 0) {
                 Toast.makeText(getApplicationContext(), "QUE HACES PAYASO, PON ALGO ESPABILAO.", Toast.LENGTH_SHORT).show();
             } else {
-                medication.medName = medNameEt.getText().toString();
-                medication.timesTaken = timesTakenEt.getText().length() == 0 ? 1 : Integer.parseInt(timesTakenEt.getText().toString());
+                medication.medName = binding.etMedication.getText().toString();
+                medication.timesTaken = binding.etNumber.getText().length() == 0 ? 1 : Integer.parseInt(binding.etNumber.getText().toString());
                 medication.medDate = new Date();
                 medDao.insertMed(medication);
             }

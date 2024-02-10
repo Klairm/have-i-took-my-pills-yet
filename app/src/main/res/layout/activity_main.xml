@@ -125,6 +125,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/filterName"/>
 
+        <Spinner
+            android:id="@+id/searchLimit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

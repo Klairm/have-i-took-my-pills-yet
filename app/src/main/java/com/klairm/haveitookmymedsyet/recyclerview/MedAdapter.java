@@ -28,11 +28,13 @@ import java.util.Locale;
 public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
     LifecycleOwner lifecycleOwner;
     EditText filterEt;
+    Integer searchLimit;
 
-    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner, EditText filterEt) {
+    public MedAdapter(@NonNull DiffUtil.ItemCallback<Med> diffCallback, LifecycleOwner lifecycleOwner, EditText filterEt,Integer searchLimit) {
         super(diffCallback);
         this.lifecycleOwner = lifecycleOwner;
         this.filterEt = filterEt;
+        this.searchLimit = searchLimit;
     }
 
 
@@ -54,9 +56,9 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
             MedDatabase db = Room.databaseBuilder(holder.deleteBtn.getContext(), MedDatabase.class, "med").allowMainThreadQueries().build();
             MedDAO medDao = db.medDao();
             MedViewModel viewModel = new MedViewModel(medDao);
-            viewModel.medList.observe(this.lifecycleOwner, list -> this.submitList(list));
+            viewModel.medList.observe(this.lifecycleOwner, this::submitList);
             medDao.deleteMed(getItem(position));
-            viewModel.setMedList(filterEt.getText().toString());
+            viewModel.setMedList(filterEt.getText().toString(),searchLimit);
 
         });
 

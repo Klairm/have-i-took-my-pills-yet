@@ -13,13 +13,19 @@ import java.util.List;
 public class MedViewModel extends ViewModel {
     MedDAO medDao;
 
-    private final MutableLiveData<String> mutacion = new MutableLiveData<>();
 
-    public LiveData<List<Med>> medList = Transformations.switchMap(mutacion, s -> {
+    private final MutableLiveData<String> medNameLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> searchLimitLiveData = new MutableLiveData<>();
+
+    public LiveData<List<Med>> medList = Transformations.switchMap(medNameLiveData, s -> {
+        Integer searchLimit = searchLimitLiveData.getValue();
+        if(searchLimit == null  || searchLimit == 0  ){
+            searchLimit = medDao.getMedicationCount();
+        }
         if (s.length() == 0) {
-            return medDao.getAll();
+            return medDao.getAll(searchLimit);
         } else {
-            return medDao.getAllByName(s);
+            return medDao.getAllByName(s,searchLimit);
         }
 
     });
@@ -27,11 +33,17 @@ public class MedViewModel extends ViewModel {
     public MedViewModel(MedDAO medDao) {
 
         this.medDao = medDao;
-    }
-
-    public void setMedList(String medName) {
-        mutacion.setValue(medName);
-
 
     }
+
+    public void setMedList(String medName,Integer searchLimit) {
+        searchLimitLiveData.setValue(searchLimit);
+        medNameLiveData.setValue(medName);
+
+
+
+    }
+
+
+
 }

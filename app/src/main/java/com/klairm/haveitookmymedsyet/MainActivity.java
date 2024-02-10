@@ -9,6 +9,9 @@ import androidx.room.Room;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,11 +25,13 @@ import com.klairm.haveitookmymedsyet.recyclerview.MedAdapter;
 import java.util.Date;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     // TODO: Don't use .allowMainThreadQueries() , instead async for the database
     // TODO: Better UI lmao
 
     private ActivityMainBinding binding;
+    Integer searchLimit = 7;
+    MedViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +46,24 @@ public class MainActivity extends AppCompatActivity {
         MedDAO medDao = db.medDao();
 
 
-        MedViewModel viewModel = new MedViewModel(medDao);
+         viewModel = new MedViewModel(medDao);
 
 
-        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this, binding.filterSearch);
+        MedAdapter adapter = new MedAdapter(new MedAdapter.UserDiff(), this, binding.filterSearch,searchLimit);
 
         viewModel.medList.observe(this, adapter::submitList);
 
 
         binding.medicationList.setAdapter(adapter);
         binding.medicationList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        viewModel.setMedList(binding.filterSearch.getText().toString());
+        viewModel.setMedList(binding.filterSearch.getText().toString(),searchLimit);
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.searchLimitValues,android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.searchLimit.setAdapter(spinnerAdapter);
+        binding.searchLimit.setOnItemSelectedListener(this);
+
+
 
         binding.filterSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -61,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                viewModel.setMedList(binding.filterSearch.getText().toString());
+                viewModel.setMedList(binding.filterSearch.getText().toString(),searchLimit);
 
 
             }
@@ -90,5 +102,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String searchLimit = parent.getItemAtPosition(position).toString();
+            if(searchLimit.equals("All")){
+                this.searchLimit = 0;
+            }else{
+                this.searchLimit = Integer.parseInt(searchLimit);
+            }
+            viewModel.setMedList(binding.filterSearch.getText().toString(),this.searchLimit);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 

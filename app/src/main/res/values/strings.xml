@@ -2,5 +2,5 @@
     <string name="app_name">Meds register</string>
     <string name="add_button">Add</string>
     <string name="med_title">Medication Name</string>
-    <string name="timesTak_title">Times Taken</string>
+    <string name="timesTak_title">Milligrams</string>
 </resources>

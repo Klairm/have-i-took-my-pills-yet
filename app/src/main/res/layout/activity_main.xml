@@ -127,9 +127,14 @@
 
         <Spinner
             android:id="@+id/searchLimit"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/filterSearch"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </LinearLayout>
 

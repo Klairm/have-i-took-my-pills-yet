@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 medication.timesTaken = binding.etNumber.getText().length() == 0 ? 1 : Integer.parseInt(binding.etNumber.getText().toString());
                 medication.medDate = new Date();
                 medDao.insertMed(medication);
+                binding.etMedication.setText("");
+                binding.etNumber.setText("");
             }
 
 

@@ -3,4 +3,8 @@
     <string name="add_button">Add</string>
     <string name="med_title">Medication Name</string>
     <string name="timesTak_title">Milligrams</string>
+    <string name="img_delete">img-delete</string>
+    <string name="date">23/02/2034 23:20</string>
+    <string name="ibuprofeno">Ibuprofeno</string>
+    <string name="timesTaken">2</string>
 </resources>

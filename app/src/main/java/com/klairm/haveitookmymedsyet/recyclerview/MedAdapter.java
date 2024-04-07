@@ -61,6 +61,21 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
             viewModel.setMedList(filterEt.getText().toString(),searchLimit);
 
         });
+        holder.getReuseBtn().setOnClickListener(v -> {
+            // TODO: There should be a favorites table in the DB where you can have favorite medication and add that instead of click from the same list
+            MedDatabase db = Room.databaseBuilder(holder.reuseBtn.getContext(), MedDatabase.class, "med").allowMainThreadQueries().build();
+            MedDAO medDao = db.medDao();
+            MedViewModel viewModel = new MedViewModel(medDao);
+            viewModel.medList.observe(this.lifecycleOwner, this::submitList);
+
+            Med medication = getItem(position);
+            medication.medDate = new Date();
+            medication.id += 1;
+
+            medDao.insertMed(medication);
+            viewModel.setMedList(filterEt.getText().toString(),searchLimit);
+
+        });
 
     }
 
@@ -87,6 +102,7 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
         private final TextView timesTaken;
         private final TextView dateTaken;
 
+        private final ImageButton reuseBtn;
         private final ImageButton deleteBtn;
 
         public ViewHolder(@NonNull View itemView) {
@@ -96,6 +112,7 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
             timesTaken = (TextView) itemView.findViewById(R.id.timesTaken);
             dateTaken = (TextView) itemView.findViewById(R.id.dateTaken);
             deleteBtn = (ImageButton) itemView.findViewById(R.id.delete);
+            reuseBtn = (ImageButton) itemView.findViewById(R.id.reuse);
 
         }
 
@@ -114,6 +131,9 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
 
         public ImageButton getDeleteButton() {
             return deleteBtn;
+        }
+        public ImageButton getReuseBtn(){
+            return reuseBtn;
         }
     }
 }

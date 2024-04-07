@@ -26,4 +26,14 @@ public class Med {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Med{" +
+                "id=" + id +
+                ", medName='" + medName + '\'' +
+                ", timesTaken=" + timesTaken +
+                ", medDate=" + medDate +
+                '}';
+    }
 }

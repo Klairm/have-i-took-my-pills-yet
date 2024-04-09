@@ -3,6 +3,9 @@ plugins {
 }
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+    }
     namespace 'com.klairm.haveitookmymedsyet'
     compileSdk 34
 

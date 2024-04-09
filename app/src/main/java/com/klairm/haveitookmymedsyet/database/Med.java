@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+import kotlin.Suppress;
+
 @Entity
 public class Med {
     @PrimaryKey(autoGenerate = true)
@@ -27,13 +29,7 @@ public class Med {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "Med{" +
-                "id=" + id +
-                ", medName='" + medName + '\'' +
-                ", timesTaken=" + timesTaken +
-                ", medDate=" + medDate +
-                '}';
-    }
+
+
+
 }

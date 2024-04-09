@@ -70,7 +70,7 @@ public class MedAdapter extends ListAdapter<Med, MedAdapter.ViewHolder> {
 
             Med medication = getItem(position);
             medication.medDate = new Date();
-            medication.id += 1;
+            medication.id = medDao.getLastId() +1;
 
             medDao.insertMed(medication);
             viewModel.setMedList(filterEt.getText().toString(),searchLimit);

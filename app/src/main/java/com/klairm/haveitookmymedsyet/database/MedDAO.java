@@ -27,5 +27,8 @@ public interface MedDAO {
     @Delete
     void deleteMed(Med med);
 
+    @Query("SELECT max(id) FROM Med")
+    int getLastId();
+
 
 }

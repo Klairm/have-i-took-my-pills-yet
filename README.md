@@ -2,8 +2,7 @@
 
 # TODOS:
 - Clean code
-- Better UI lmao
-- Add clear database button?
+- Better UI 
 
 
-![img.png](img.png)
+
